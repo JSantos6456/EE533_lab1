@@ -3,6 +3,10 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h> 
+#include <arpa/inet.h>  // For inet_pton() and inet_ntoa()
+#include <stdlib.h>  // For exit()
+#include <string.h>  // For memset() (instead of bzero)
+#include <unistd.h>  // For read() and write()
 
 void error(char *msg)
 {

@@ -4,6 +4,9 @@
 #include <sys/types.h> 
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <stdlib.h>     // For exit()
+#include <string.h>     // For bzero() or memset()
+#include <unistd.h>     // For read(), write(), and close()
 
 void error(char *msg)
 {

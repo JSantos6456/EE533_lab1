@@ -1,10 +1,13 @@
+/* A simple server in the internet domain using TCP
+   The port number is passed as an argument */
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
+#include <stdlib.h>     // For exit()
+#include <string.h>     // For bzero() or memset()
+#include <unistd.h>     // For read(), write(), and close()
+#include <signal.h>     // For signal handling
 
 void error(char *msg)
 {
@@ -34,6 +37,7 @@ void handle_client(int newsockfd)
     close(newsockfd);
 }
 
+
 int main(int argc, char *argv[])
 {
     int sockfd, newsockfd, portno, clilen;
@@ -44,6 +48,9 @@ int main(int argc, char *argv[])
         fprintf(stderr, "ERROR, no port provided\n");
         exit(1);
     }
+
+    // Setup SIGCHLD handler to prevent zombies
+    signal(SIGCHLD, SIG_IGN);
 
     // Create socket
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -91,3 +98,4 @@ int main(int argc, char *argv[])
     close(sockfd);
     return 0;
 }
+
